@@ -2,7 +2,10 @@ module Crondown
   DELIMITERS = %w(, /)
 
   def self.next_event(events)
-    next_events = events.map { |event| Chronic.parse("next #{event}") }
+    # Chronic has a weird bug where "next friday" parses to noon?
+    # And "next friday at midnight" parses to midnight of the next day?
+    # So instead get it 1 second after midnight
+    next_events = events.map { |event| Chronic.parse("next #{event} at 00:00:01AM") }
 
     yield next_events.sort.first
   end
