@@ -8,6 +8,7 @@ gem 'sinatra-contrib'
 gem 'chronic'
 gem 'slim'
 gem 'tilt'
+gem 'activesupport'
 
 group :development do
   gem 'pry'

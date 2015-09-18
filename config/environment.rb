@@ -2,10 +2,6 @@
 require 'bundler'
 Bundler.require
 
-require 'sinatra'
-require 'slim'
-require 'tilt'
-
 # set the pathname for the root of the app
 require 'pathname'
 APP_ROOT = Pathname.new(File.expand_path("../../", __FILE__))

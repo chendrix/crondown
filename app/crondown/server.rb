@@ -1,3 +1,4 @@
+require 'active_support/all'
 require 'sinatra/base'
 require 'sinatra/reloader'
 require 'sinatra/json'
@@ -7,6 +8,9 @@ require 'slim'
 
 require 'crondown/crondown'
 
+Time.zone = 'America/Los_Angeles'
+Chronic.time_class = Time.zone
+
 module Crondown
   class Server < Sinatra::Base
     configure :development do
@@ -15,13 +19,13 @@ module Crondown
 
     get '/*.json' do
       Crondown.next_event_from_params(params) do |time|
-        json seconds_until_next_event: (time - Time.now)
+        json seconds_until_next_event: (time - DateTime.current)
       end
     end
 
     get '/*' do
       Crondown.next_event_from_params(params) do |time|
-        slim :index, locals: {seconds_until_next_event: (time - Time.now)}
+        slim :index, locals: {seconds_until_next_event: (time - DateTime.current)}
       end
     end
   end
