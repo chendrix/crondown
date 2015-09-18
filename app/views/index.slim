@@ -1,14 +1,25 @@
-
+doctype html
 html
-head
-  link rel="stylesheet" type="text/css" href="#{url('stylesheets/flipclock.css')}"
-  script src="#{url('javascripts/jquery.min.js')}"
-  script src="#{url('javascripts/flipclock.min.js')}"
-body
-  span#time 05:00
-  h1 Crondown
+  head
+    title Crondown
+    link rel="stylesheet" type="text/css" href="#{url('stylesheets/flipclock.css')}"
+    script src="#{url('javascripts/jquery.min.js')}"
+    script src="#{url('javascripts/flipclock.min.js')}"
+  body
+    #countdown
 
+    javascript:
+      var clock = $("#countdown").FlipClock({
+        autoStart: false,
+        countdown: true,
+        callbacks: {
+          start: function () {
+            $.get("/#{params[:captures][0]}.json", {}, function (data) {
+              clock.setTime(data.seconds_until_next_event);
+            }, 'json');
+          }
+        }
+      });
 
-
-  script
-    
+      clock.setTime(#{locals[:seconds_until_next_event]});
+      clock.start();
