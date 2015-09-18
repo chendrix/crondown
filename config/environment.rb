@@ -19,5 +19,6 @@ module Crondown
     set :root, APP_ROOT.to_path
     set :views, File.join(Crondown::Server.root, "app", "views")
     set :public_folder, File.join(Crondown::Server.root, "app", "public")
+    set :protection, :except => :frame_options
   end
 end

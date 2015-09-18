@@ -5,8 +5,6 @@ require 'sinatra/json'
 require 'chronic'
 require 'json'
 require 'slim'
-require 'pry'
-
 
 require 'crondown/crondown'
 
