@@ -5,18 +5,37 @@ html
     link rel="stylesheet" type="text/css" href="#{url('stylesheets/flipclock.css')}"
     script src="#{url('javascripts/jquery.min.js')}"
     script src="#{url('javascripts/flipclock.min.js')}"
+    css:
+      body {
+        padding: 24px;
+      }
   body
     #countdown
 
     javascript:
+      var oneDay = 86400,
+          twoHours = 6200 * 1000,
+          seconds = "#{locals[:seconds_until_next_event].to_json}",
+          eventsURL = "#{locals[:events_url].first}" + ".json";
+
       var clock = $("#countdown").FlipClock({
         autoStart: false,
         countdown: true,
         callbacks: {
           start: function () {
-            $.get("/#{params[:captures][0]}.json", {}, function (data) {
+            $.get("/" + eventsURL, {}, function (data) {
               clock.setTime(data.seconds_until_next_event);
             }, 'json');
+          },
+          interval: function () {
+            var timeLeftOnClock = clock.getTime().time;
+            if (timeLeftOnClock < oneDay) {
+              $('body').css('background-color', '#A01D18');
+            } else if (timeLeftOnClock < (oneDay * 2)) {
+              $('body').css('background-color', '#EBAD1A');
+            } else {
+              $('body').css('background-color', 'white');
+            }
           }
         }
       });

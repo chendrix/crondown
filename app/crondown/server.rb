@@ -5,6 +5,8 @@ require 'sinatra/json'
 require 'chronic'
 require 'json'
 require 'slim'
+require 'pry'
+
 
 require 'crondown/crondown'
 
@@ -19,14 +21,21 @@ module Crondown
 
     get '/*.json' do
       Crondown.next_event_from_params(params) do |time|
-        json seconds_until_next_event: (time - DateTime.current)
+        json seconds_until_next_event: make_seconds(time)
       end
     end
 
     get '/*' do
       Crondown.next_event_from_params(params) do |time|
-        slim :index, locals: {seconds_until_next_event: (time - DateTime.current)}
+        slim :index, locals: {
+          seconds_until_next_event: make_seconds(time),
+          events_url: params[:captures]
+        }
       end
+    end
+
+    def make_seconds(time)
+      (time - DateTime.current).round
     end
   end
 end
