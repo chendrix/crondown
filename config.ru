@@ -1,4 +1,6 @@
-$:.unshift(File.expand_path('../lib', __FILE__))
+require 'bundler'
+Bundler.require
 
-require 'crondown'
-run Crondown
+require File.expand_path('../config/environment',  __FILE__)
+
+run Crondown::Server

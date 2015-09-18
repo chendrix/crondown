@@ -20,6 +20,10 @@ GEM
       rack-test
       sinatra (~> 1.4.0)
       tilt (>= 1.3, < 3)
+    slim (3.0.6)
+      temple (~> 0.7.3)
+      tilt (>= 1.3.3, < 2.1)
+    temple (0.7.6)
     tilt (2.0.1)
 
 PLATFORMS
@@ -29,6 +33,8 @@ DEPENDENCIES
   chronic
   sinatra
   sinatra-contrib
+  slim
+  tilt
 
 BUNDLED WITH
    1.10.5
